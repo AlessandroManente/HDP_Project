@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import argparse
 from utils.basic_graphs_utilities import *
+from utils.giant_component_analysis import *
 
 
 def parsing():
@@ -19,15 +20,33 @@ def parsing():
                         type=float,
                         default=1,
                         help='parameter probability')
+
     parser.add_argument('--n', type=float, default=10, help='number of nodes')
+
     parser.add_argument('--k',
                         type=int,
                         default=3,
                         help='number k nearest neighbors')
+
     parser.add_argument('--t',
                         type=str,
                         default='erdos_renyi',
                         help='tipology of graph')
+
+    parser.add_argument('--gm',
+                        type=int,
+                        default=100,
+                        help='number of trials to make statistics')
+
+    parser.add_argument('--gmd',
+                        type=int,
+                        default=100,
+                        help="number of d's to make statistics")
+
+    parser.add_argument('--gmean',
+                        type=bool,
+                        default=False,
+                        help="compute mean of giant component study")
 
     args = parser.parse_args()
 
@@ -35,5 +54,6 @@ def parsing():
 
 
 if __name__ == "__main__":
-    G = generate_graph(parsing())
-    print_graph(G)
+    args = parsing()
+
+    test_1, test_2 = main_giant(args)

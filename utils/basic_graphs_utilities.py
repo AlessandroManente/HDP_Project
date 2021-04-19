@@ -26,13 +26,14 @@ def print_graph(graph):
     plt.show()
 
 
-def generate_graph(args):
+def generate_graph(args, d=None):
     '''
     Given arguments parsed from function parsing, it generates a graph of 
     given number of nodes, probability of connection, number of nearest 
     neighbors and tipology.
     '''
-    d = args.d
+    if d is None:
+        d = args.d
     n = args.n
     k = args.k
     p = d / n
@@ -44,3 +45,13 @@ def generate_graph(args):
         G = type_graph[tipology](n, p)
 
     return G
+
+
+def connected_components(graph):
+    '''
+    Generate a sorted list of connected components of the given graph
+    '''
+    return [
+        len(c)
+        for c in sorted(nx.connected_components(graph), key=len, reverse=True)
+    ]
