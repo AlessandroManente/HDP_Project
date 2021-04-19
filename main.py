@@ -21,7 +21,7 @@ def parsing():
                         default=1,
                         help='parameter probability')
 
-    parser.add_argument('--n', type=float, default=10, help='number of nodes')
+    parser.add_argument('--n', type=int, default=10, help='number of nodes')
 
     parser.add_argument('--k',
                         type=int,
