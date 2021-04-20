@@ -17,3 +17,18 @@ Just run the code:
 ```
 pip install -r requirements.txt
 ```
+
+## Usage Example
+
+Let's say we want to fully analyse the Erdos-Renyi model with default arguments, then we just have to call:
+
+```
+python main.py
+```
+
+If one wants to modify the parameter $d$, then:
+
+```
+python main.py --d 1.6
+```
+

@@ -6,6 +6,28 @@ from utils.giant_component_analysis import *
 from utils.node_degree_distribution import *
 
 
+def erdos_renyi_analysis(args):
+    test_1, test_2 = main_giant(args)
+    test_3, test_4 = main_node_distribution(args)
+
+    return test_1, test_2, test_3, test_4
+
+
+def barabasi_albert_analysis(args):
+    pass
+
+
+def watts_strogatz_analysis(args):
+    pass
+
+
+analysis = {
+    'erdos_renyi_analysis': erdos_renyi_analysis,
+    'barabasi_albert': barabasi_albert_analysis,
+    'watts_strogatz': watts_strogatz_analysis
+}
+
+
 def parsing():
     '''
     Parse arguments given when calling function. Arguments are:
@@ -49,15 +71,21 @@ def parsing():
                         default=False,
                         help="compute mean of giant component study")
 
-    parser.add_argument('--ndm',
-                        type=int,
-                        default=100,
-                        help="number of graph of which compute degrees of nodes")
+    parser.add_argument(
+        '--ndm',
+        type=int,
+        default=100,
+        help="number of graph of which compute degrees of nodes")
 
     parser.add_argument('--ndmean',
                         type=bool,
                         default=False,
                         help="compute mean of node distribution study")
+
+    parser.add_argument('--all',
+                        type=bool,
+                        default=False,
+                        help="execute analysis of all three types of graphs")
 
     parser.add_argument('--ndmd',
                         type=int,
@@ -72,5 +100,9 @@ def parsing():
 if __name__ == "__main__":
     args = parsing()
 
-    # test_1, test_2 = main_giant(args)
-    test_1, test_2 = main_node_distribution(args)
+    results = []
+    if args.all:
+        for key, tipology in analysis.items():
+            results.append(tipology(args))
+    else:
+        results.append(analysis[args.t + '_analysis'](args))
