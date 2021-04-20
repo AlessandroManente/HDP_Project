@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import argparse
 from utils.basic_graphs_utilities import *
 from utils.giant_component_analysis import *
+from utils.node_degree_distribution import *
 
 
 def parsing():
@@ -48,6 +49,21 @@ def parsing():
                         default=False,
                         help="compute mean of giant component study")
 
+    parser.add_argument('--ndm',
+                        type=int,
+                        default=100,
+                        help="number of graph of which compute degrees of nodes")
+
+    parser.add_argument('--ndmean',
+                        type=bool,
+                        default=False,
+                        help="compute mean of node distribution study")
+
+    parser.add_argument('--ndmd',
+                        type=int,
+                        default=100,
+                        help="number of d's to make statistics")
+
     args = parser.parse_args()
 
     return args
@@ -56,4 +72,5 @@ def parsing():
 if __name__ == "__main__":
     args = parsing()
 
-    test_1, test_2 = main_giant(args)
+    # test_1, test_2 = main_giant(args)
+    test_1, test_2 = main_node_distribution(args)
