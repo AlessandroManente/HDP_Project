@@ -26,7 +26,7 @@ def print_graph(graph):
     plt.show()
 
 
-def generate_graph(args, d=None):
+def generate_graph(args, d=None, n=None):
     '''
     Given arguments parsed from function parsing, it generates a graph of 
     given number of nodes, probability of connection, number of nearest 
@@ -34,15 +34,21 @@ def generate_graph(args, d=None):
     '''
     if d is None:
         d = args.d
-    n = args.n
+    if n is None:
+        n = args.n
     k = args.k
-    p = d / n
     tipology = args.t
 
-    if tipology == 'watts_strogatz':
-        G = type_graph[tipology](n, k, p)
-    else:
+    if tipology == 'erdos_renyi':
+        p = d / n
         G = type_graph[tipology](n, p)
+
+    elif tipology == 'watts_strogatz':
+        p = args.pws
+        G = type_graph[tipology](n, k, p)
+
+    else:
+        G = type_graph[tipology](n, args.mba)
 
     return G
 

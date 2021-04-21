@@ -64,6 +64,12 @@ def count_degrees_varying_d(args, mean=False):
     return data_df
 
 
+# def plot_degree_dist(G):
+#     degrees = [G.degree(n) for n in G.nodes()]
+#     plt.hist(degrees)
+#     plt.show()
+
+
 def main_node_distribution(args):
     data_fixed_args = count_degrees_fixed_d(args)
     data_varying_d = count_degrees_varying_d(args, args.ndmean)
