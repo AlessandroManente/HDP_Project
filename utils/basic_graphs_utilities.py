@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 type_graph = {
     'erdos_renyi': nx.gnp_random_graph,
     'barabasi_albert': nx.barabasi_albert_graph,
-    'watts_strogatz': nx.watts_strogatz_graph
+    'watts_strogatz': nx.connected_watts_strogatz_graph
 }
 
 

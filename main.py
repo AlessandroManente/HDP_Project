@@ -23,11 +23,10 @@ def barabasi_albert_analysis(args):
 
 
 def watts_strogatz_analysis(args):
-    # TODO: Fix the problem of not connection with the graphs
-    #test_1, test_2 = main_average_path_length(args)
+    test_1, test_2 = main_average_path_length(args)
     #test_1, test_2 = main_clustering_coefficient(args)
 
-    #return test_1, test_2
+    return test_1, test_2
 
     pass
 
@@ -59,7 +58,7 @@ def parsing():
 
     parser.add_argument('--k',
                         type=int,
-                        default=3,
+                        default=2,
                         help='number k nearest neighbors for WS')
 
     parser.add_argument('--t',
@@ -105,7 +104,7 @@ def parsing():
 
     parser.add_argument('--pws',
                         type=float,
-                        default=0,
+                        default=0.95,
                         help="probability of rewiring a node in WS model")
 
     parser.add_argument(

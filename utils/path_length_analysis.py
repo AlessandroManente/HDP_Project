@@ -7,7 +7,9 @@ def compute_distribution_average_path_length(args):
     empirical_values = []
     theoretical_values = []
 
-    for i in range(3, args.n + 1):
+    h = args.k + 1
+
+    for i in range(h, args.n + 1):
         if args.aplmean:
             temp = []
 
@@ -31,7 +33,10 @@ def compute_distribution_average_path_length(args):
                 theoretical_values.append(np.log(i) / np.log(np.log(i)))
 
         else:
-            theoretical_values.append(np.log(i) / np.log(args.k))
+            if args.pws > 0.5:
+                theoretical_values.append(np.log(i) / np.log(args.k))
+            else:
+                theoretical_values.append(i / (2 * args.k))
 
     return empirical_values, theoretical_values
 
@@ -40,8 +45,10 @@ def main_average_path_length(args):
     empirical_values, theoretical_values = compute_distribution_average_path_length(
         args)
 
-    plt.plot(list(range(3, args.n + 1)), empirical_values, label="empirical")
-    plt.plot(list(range(3, args.n + 1)),
+    h = args.k + 1
+
+    plt.plot(list(range(h, args.n + 1)), empirical_values, label="empirical")
+    plt.plot(list(range(h, args.n + 1)),
              theoretical_values,
              label="theoretical")
     plt.legend()
