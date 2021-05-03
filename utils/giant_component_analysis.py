@@ -2,6 +2,7 @@ import networkx as nx
 import pandas as pd
 import numpy as np
 from utils.basic_graphs_utilities import *
+from os import path
 
 
 def find_components(graph):
@@ -14,7 +15,7 @@ def find_components(graph):
     return [cc[0], len(cc)]
 
 
-def giant_components_fixed_args(args, d=None):
+def giant_components_fixed_args(args, d=None, tipology=None):
     '''
     Test the presence and dimension of giant connected component as well as number of
     usual connected components for fixed parameters, for a given number of times args.m.
@@ -22,9 +23,9 @@ def giant_components_fixed_args(args, d=None):
     data = []
     for i in range(args.gm):
         if d is None:
-            graph = generate_graph(args)
+            graph = generate_graph(args, None, None, tipology)
         else:
-            graph = generate_graph(args, d)
+            graph = generate_graph(args, d, None, tipology)
 
         data_cc = find_components(graph)
         data.append(data_cc)
@@ -34,7 +35,7 @@ def giant_components_fixed_args(args, d=None):
         columns=['size_giant_component', 'number_of_connected_components'])
 
 
-def giant_component_varying_d(args, mean=False):
+def giant_component_varying_d(args, mean=False, tipology=None):
     '''
     Test the presence and dimension of giant connected component as well as number of
     usual connected components for a varying value of d.
@@ -47,7 +48,7 @@ def giant_component_varying_d(args, mean=False):
 
     if mean:
         for d in d_list:
-            data_cc = giant_components_fixed_args(args, d)
+            data_cc = giant_components_fixed_args(args, d, None, tipology)
             data.append([
                 data_cc['size_giant_component'].mean(),
                 data_cc['number_of_connected_components'].mean()
@@ -55,7 +56,7 @@ def giant_component_varying_d(args, mean=False):
 
     else:
         for d in d_list:
-            graph = generate_graph(args, d)
+            graph = generate_graph(args, d, None, tipology)
             data_cc = find_components(graph)
             data.append(data_cc)
 
@@ -64,28 +65,38 @@ def giant_component_varying_d(args, mean=False):
         columns=['size_giant_component', 'number_of_connected_components'])
 
 
-def main_giant(args):
-    data_fixed_args = giant_components_fixed_args(args)
-    data_varying_d = giant_component_varying_d(args, args.gmean)
+def main_giant(args, tipology=None):
+    data_fixed_args = giant_components_fixed_args(args, None, tipology)
+    data_varying_d = giant_component_varying_d(args, args.gmean, tipology)
 
     plt.plot(np.arange(len(data_fixed_args['size_giant_component'])),
              data_fixed_args['size_giant_component'])
     plt.title('Size giant component in various trials - fixed parameters')
-    plt.show()
+    plt.savefig(path.join('results', str(args.n), tipology, 'gca_size_fixed_{}.png'.format(tipology)))
+    # plt.show()
 
     plt.plot(np.arange(len(data_fixed_args['number_of_connected_components'])),
              data_fixed_args['number_of_connected_components'])
     plt.title('Number of components in various trials - fixed parameters')
-    plt.show()
+    plt.savefig(
+        path.join('results', str(args.n), tipology,
+                  'gca_ncomp_fixed_{}.png'.format(tipology)))
+    # plt.show()
 
     plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
              data_varying_d['size_giant_component'])
     plt.title('Size giant component in various trials - varying d')
-    plt.show()
+    plt.savefig(
+        path.join('results', str(args.n), tipology,
+                  'gca_size_varying_{}.png'.format(tipology)))
+    # plt.show()
 
     plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
              data_varying_d['number_of_connected_components'])
     plt.title('Number of components in various trials - varying d')
-    plt.show()
+    plt.savefig(
+        path.join('results', str(args.n), tipology,
+                  'gca_ncomp_varying_{}.png'.format(tipology)))
+    # plt.show()
 
     return data_fixed_args, data_varying_d

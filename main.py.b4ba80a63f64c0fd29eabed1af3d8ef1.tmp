@@ -38,7 +38,6 @@ def watts_strogatz_analysis(args):
     tipology = 'watts_strogatz'
     if not tipology in os.listdir(os.path.join('results', str(args.n))):
         os.mkdir(os.path.join('results', str(args.n), tipology))
-        
     test_1, test_2 = main_average_path_length(args, tipology)
     #test_1, test_2 = main_clustering_coefficient(args, tipology)
 
