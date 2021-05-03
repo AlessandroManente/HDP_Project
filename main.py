@@ -10,6 +10,9 @@ import os
 
 
 def erdos_renyi_analysis(args):
+    '''
+    Function that calls all the analysis for the erdos_renyi model
+    '''
     print('----- Analysis of ER model -----')
     tipology = 'erdos_renyi'
     if not tipology in os.listdir(os.path.join('results', str(args.n))):
@@ -22,6 +25,9 @@ def erdos_renyi_analysis(args):
 
 
 def barabasi_albert_analysis(args):
+    '''
+    Function that calls all the analysis for the erdos_renyi model
+    '''
     print('----- Analysis of BA model -----')
     tipology = 'barabasi_albert'
     if not tipology in os.listdir(os.path.join('results', str(args.n))):
@@ -29,20 +35,25 @@ def barabasi_albert_analysis(args):
 
     test_1, test_2 = main_node_distribution(args, tipology)
     test_3, test_4 = main_average_path_length(args, tipology)
+    test_5, test_6 = main_giant(args, tipology)
 
-    return test_1, test_2, test_3, test_4
+    return test_1, test_2, test_3, test_4, test_5, test_6
 
 
 def watts_strogatz_analysis(args):
+    '''
+    Function that calls all the analysis for the erdos_renyi model
+    '''
     print('----- Analysis of WS model -----')
     tipology = 'watts_strogatz'
     if not tipology in os.listdir(os.path.join('results', str(args.n))):
         os.mkdir(os.path.join('results', str(args.n), tipology))
-        
-    test_1, test_2 = main_average_path_length(args, tipology)
-    #test_1, test_2 = main_clustering_coefficient(args, tipology)
 
-    return test_1, test_2
+    test_1, test_2 = main_node_distribution(args, tipology)
+    test_3, test_4 = main_average_path_length(args, tipology)
+    test_5, test_6 = main_giant(args, tipology)
+
+    return test_1, test_2, test_3, test_4, test_5, test_6
 
     pass
 
@@ -61,6 +72,7 @@ def parsing():
     - n : number of nodes (note that the probability is computed as p = d / n)
     - k : each node is connected to k nearest neighbors
     - t : type of graph you want to generat and print
+    - a shit-ton of other paramaters, sorry guys
     '''
     parser = argparse.ArgumentParser(
         description='Generate a G(n,p) random graph')
@@ -174,6 +186,7 @@ def parsing():
 if __name__ == "__main__":
     args = parsing()
 
+    # create a folder for the analysis of a given number of nodes
     if not str(args.n) in os.listdir(os.path.join('results')):
         os.mkdir(os.path.join('results', str(args.n)))
 

@@ -5,6 +5,13 @@ from os import path
 
 
 def compute_distribution_average_path_length(args, tipology=None):
+    '''
+    Compute the average path length for the given type of graph varying the number of nodes. 
+    It is only available for BA and WS, because ER does not have a theoretical expression
+    for that value.
+    It also computes the theoretical value, making it possible to compare the empirical results 
+    with the theory.
+    '''
     empirical_values = []
     theoretical_values = []
 
@@ -62,11 +69,15 @@ def compute_distribution_average_path_length_varying_pws(args, tipology=None):
 
 
 def main_average_path_length(args, tipology=None):
+    '''
+    Main function that calls subroutines and plot and save the results
+    '''
     empirical_values, theoretical_values = compute_distribution_average_path_length(
         args, tipology)
 
     h = args.k + 1
 
+    plt.figure()
     plt.plot(list(range(h, args.n + 1)), empirical_values, label="empirical")
     plt.plot(list(range(h, args.n + 1)),
              theoretical_values,
@@ -78,18 +89,21 @@ def main_average_path_length(args, tipology=None):
 
     if tipology == 'watts_strogatz':
         plt.savefig(
-            path.join('results', str(args.n), tipology,
-                      'pla_fixed_{}_{}_{}.png'.format(tipology, args.k, args.pws)))
+            path.join(
+                'results', str(args.n), tipology,
+                'pla_fixed_{}_{}_{}.png'.format(tipology, args.k, args.pws)))
 
     plt.savefig(
         path.join('results', str(args.n), tipology,
                   'pla_fixed_{}.png'.format(tipology)))
     # plt.show()
 
+    # if required, shows the behaviour varying parameter pws instead of the number of nodes
     if args.aplwsvaryingbeta and tipology == 'watts_strogatz':
         values_var = compute_distribution_average_path_length_varying_pws(
             args, tipology)
 
+        plt.figure()
         plt.plot([1 - 1 / i for i in range(1, 21)],
                  values_var,
                  label="empirical")

@@ -5,6 +5,10 @@ from os import path
 
 
 def compute_clustering_coefficient(args, tipology=None):
+    '''
+    Computes the clustering coefficient given the parameters obtained by the parsing. If required, it can compute a mean
+    of the clustering coefficients, so as to limit the effects of the variance in the random process
+    '''
     empirical_values = []
     theoretical_values = []
 
@@ -31,6 +35,9 @@ def compute_clustering_coefficient(args, tipology=None):
 
 
 def main_clustering_coefficient(args, tipology):
+    '''
+    Main function that calls subroutines and plot and save the results
+    '''
     empirical_values, theoretical_values = compute_clustering_coefficient(
         args, tipology)
 

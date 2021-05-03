@@ -66,15 +66,22 @@ def giant_component_varying_d(args, mean=False, tipology=None):
 
 
 def main_giant(args, tipology=None):
+    '''
+    Main function that calls subroutines and plot and save the results.
+    Here are shown the size of the giant component and the number of components,
+    both with fixed parameters or varying the value of args.d.
+    '''
     data_fixed_args = giant_components_fixed_args(args, None, tipology)
     data_varying_d = giant_component_varying_d(args, args.gmean, tipology)
 
+    plt.figure()
     plt.plot(np.arange(len(data_fixed_args['size_giant_component'])),
              data_fixed_args['size_giant_component'])
     plt.title('Size giant component in various trials - fixed parameters')
     plt.savefig(path.join('results', str(args.n), tipology, 'gca_size_fixed_{}.png'.format(tipology)))
     # plt.show()
 
+    plt.figure()
     plt.plot(np.arange(len(data_fixed_args['number_of_connected_components'])),
              data_fixed_args['number_of_connected_components'])
     plt.title('Number of components in various trials - fixed parameters')
@@ -83,6 +90,7 @@ def main_giant(args, tipology=None):
                   'gca_ncomp_fixed_{}.png'.format(tipology)))
     # plt.show()
 
+    plt.figure()
     plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
              data_varying_d['size_giant_component'])
     plt.title('Size giant component in various trials - varying d')
@@ -91,6 +99,7 @@ def main_giant(args, tipology=None):
                   'gca_size_varying_{}.png'.format(tipology)))
     # plt.show()
 
+    plt.figure()
     plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
              data_varying_d['number_of_connected_components'])
     plt.title('Number of components in various trials - varying d')

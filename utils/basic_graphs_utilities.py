@@ -47,7 +47,7 @@ def generate_graph(args, d=None, n=None, tipology=None, p=None):
     elif tipology == 'watts_strogatz':
         if p is None:
             p = args.pws
-            
+
         G = type_graph[tipology](n, k, p)
 
     else:
