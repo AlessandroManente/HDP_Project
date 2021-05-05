@@ -9,3 +9,6 @@ test_real_dataset/name.svg
 test_real_dataset/spiral_circular.png
 test_real_dataset/.ipynb_checkpoints/graph-checkpoint.svg
 test_real_dataset/.ipynb_checkpoints/name-checkpoint.svg
+test_real_dataset/graph_circular.pdf
+test_real_dataset/spiral_circular.svg
+test_real_dataset/spiral_kamada_kawai.png
