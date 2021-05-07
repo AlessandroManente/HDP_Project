@@ -35,9 +35,8 @@ def barabasi_albert_analysis(args):
 
     test_1, test_2 = main_node_distribution(args, tipology)
     test_3, test_4 = main_average_path_length(args, tipology)
-    test_5, test_6 = main_giant(args, tipology)
 
-    return test_1, test_2, test_3, test_4, test_5, test_6
+    return test_1, test_2, test_3, test_4
 
 
 def watts_strogatz_analysis(args):
@@ -51,9 +50,8 @@ def watts_strogatz_analysis(args):
 
     test_1, test_2 = main_node_distribution(args, tipology)
     test_3, test_4 = main_average_path_length(args, tipology)
-    test_5, test_6 = main_giant(args, tipology)
 
-    return test_1, test_2, test_3, test_4, test_5, test_6
+    return test_1, test_2, test_3, test_4
 
     pass
 

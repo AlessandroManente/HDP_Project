@@ -7,8 +7,17 @@ What to test for each type of graph:
 - Erdos-Renyi:
 
   - ~~giant component (its presence going from $d<1$ to $d>1$)~~
-  - number of triangles ( *I don't think it should be done for the project* )
   - ~~nodes degree distributions~~
+
+- Barabasi-Albert:
+
+  - ~~nodes degree distributions~~
+  - ~~average shortest path length~~
+
+- Watts-Strogatz:
+
+  - ~~nodes degree distributions~~
+  - ~~average shortest path length~~
 
 ## Requirements
 
@@ -31,4 +40,3 @@ If one wants to modify the parameter $d$, then:
 ```
 python main.py --d 1.6
 ```
-
