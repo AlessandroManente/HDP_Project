@@ -26,7 +26,7 @@ def erdos_renyi_analysis(args):
 
 def barabasi_albert_analysis(args):
     '''
-    Function that calls all the analysis for the erdos_renyi model
+    Function that calls all the analysis for the barabasi_albert model
     '''
     print('----- Analysis of BA model -----')
     tipology = 'barabasi_albert'
@@ -41,7 +41,7 @@ def barabasi_albert_analysis(args):
 
 def watts_strogatz_analysis(args):
     '''
-    Function that calls all the analysis for the erdos_renyi model
+    Function that calls all the analysis for the watts_strogatz model
     '''
     print('----- Analysis of WS model -----')
     tipology = 'watts_strogatz'
@@ -138,7 +138,7 @@ def parsing():
         type=int,
         default=1,
         help=
-        "number of nodes to add at each iteration of the growth of the model")
+        "number of edges to add to the new node at each iteration of the growth of the model")
 
     parser.add_argument(
         '--aplmean',

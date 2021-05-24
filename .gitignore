@@ -1,4 +1,6 @@
 .vscode/settings.json
+__pycache__
+frames
 test_real_dataset/graph_circular.png
 test_real_dataset/graph_circular.svg
 test_real_dataset/graph_spiral.svg
