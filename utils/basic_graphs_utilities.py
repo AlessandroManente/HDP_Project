@@ -144,17 +144,12 @@ def ba_model_A(n,m, save_steps=False):
 
     for t in range(1,n):
         G.add_node(t)
-        for edge in range(m):
-            ## Define the probability distribution with which we pick the nodes
-            xk = list(G.nodes)[:-1]
-            pk = np.ones(len(xk))/len(xk)
-                
-            custom_dist = stats.rv_discrete(name="uniform_distribution", values=(xk,pk))
-            extracted = custom_dist.rvs(size=1)[0]
-            G.add_edge(t, extracted)
+        extracted = np.random.choice(list(G.nodes)[:-1], m)
+        G.add_edges_from([(t,chosen) for chosen in extracted])
             
         if save_steps:
             intermediate_graphs.append(G.copy())
+
     return G, intermediate_graphs 
 
 def ba_model_B(n,t, save_steps=False):
