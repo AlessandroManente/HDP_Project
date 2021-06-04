@@ -28,7 +28,7 @@ def print_graph(graph):
     # plt.show()
 
 
-def generate_graph(args, d=None, n=None, tipology=None, p=None, mba=None):
+def generate_graph(args, d=None, n=None, tipology=None, p=None, mba=None, k=None):
     '''
     Given arguments parsed from function parsing, it generates a graph of 
     given number of nodes, probability of connection, number of nearest 
@@ -48,7 +48,8 @@ def generate_graph(args, d=None, n=None, tipology=None, p=None, mba=None):
         G = type_graph[tipology](n, p)
 
     elif tipology == 'watts_strogatz':
-        k = args.k
+        if k is None:
+            k = args.k
         if p is None:
             p = args.pws
 
@@ -101,13 +102,13 @@ def generate_barabasi_albert(n, m,save_steps=False):
 
             if edge == 0:
                 # convention that D_(t+1)(0,t) =  1
-                # i.e. before attaching any edges to the new node, we pretend 
+                # i.e. before attaching any edges to the new node, we pretend
                 # that it has degree = 1 (check Hofstadt book page 174)
                 # TODO: if we use this convention, defining prepk like this:
 
                 #  prepk = [G.degree[i] for i in G.nodes][:-1] + [1]
 
-                #  there is the possibility to get a disconnected graph!! 
+                #  there is the possibility to get a disconnected graph!!
                 # is it normal/accepted by barabasi?
                 prepk = [G.degree[i] for i in G.nodes][:-1] + [0]
                 pk = prepk/np.sum(prepk)
@@ -118,7 +119,7 @@ def generate_barabasi_albert(n, m,save_steps=False):
             custom_dist = stats.rv_discrete(name="degree_distribution", values=(xk,pk))
             extracted = custom_dist.rvs(size=1)[0]
             G.add_edge(t, extracted)
-            
+
         if save_steps:
             intermediate_graphs.append(G.copy())
     return G, intermediate_graphs
@@ -146,11 +147,11 @@ def ba_model_A(n,m, save_steps=False):
         G.add_node(t)
         extracted = np.random.choice(list(G.nodes)[:-1], m)
         G.add_edges_from([(t,chosen) for chosen in extracted])
-            
+
         if save_steps:
             intermediate_graphs.append(G.copy())
 
-    return G, intermediate_graphs 
+    return G, intermediate_graphs
 
 def ba_model_B(n,t, save_steps=False):
     """
@@ -166,7 +167,7 @@ def ba_model_B(n,t, save_steps=False):
     nodes_list = list(range(n))
     G.add_nodes_from(nodes_list)
 
-    # NB: this is a custom initialization. 
+    # NB: this is a custom initialization.
     # Barabasi-Albert don't specify
     # how to initialize the first edges. i add a self loop for each node.
     for i in range(n):
@@ -183,7 +184,7 @@ def ba_model_B(n,t, save_steps=False):
         custom_dist = stats.rv_discrete(name="degree_distribution", values=(xk,pk))
         extracted = custom_dist.rvs(size=1)[0]
         G.add_edge(np.random.choice(nodes_list), extracted)
-            
+
         if save_steps:
             intermediate_graphs.append(G.copy())
     return G, intermediate_graphs

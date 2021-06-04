@@ -188,9 +188,11 @@ if __name__ == "__main__":
     if not str(args.n) in os.listdir(os.path.join('results')):
         os.mkdir(os.path.join('results', str(args.n)))
 
-    results = []
-    if args.all:
-        for key, tipology in analysis.items():
-            results.append(tipology(args))
-    else:
-        results.append(analysis[args.t](args))
+    main_clustering_coefficient(args, 'watts_strogatz')
+
+    # results = []
+    # if args.all:
+    #     for key, tipology in analysis.items():
+    #         results.append(tipology(args))
+    # else:
+    #     results.append(analysis[args.t](args))
