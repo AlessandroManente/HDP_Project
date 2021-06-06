@@ -14,6 +14,7 @@ def compute_distribution_average_path_length(args, tipology=None):
     '''
     empirical_values = []
     theoretical_values = []
+    analytical_theoretical_values = []
 
     h = args.k + 1
 
@@ -46,13 +47,16 @@ def compute_distribution_average_path_length(args, tipology=None):
             else:
                 theoretical_values.append(i / (2 * args.k))
 
-    return empirical_values, theoretical_values
+        analytical_theoretical_values.append(
+            (args.n / args.k) * analytical_path_length(i * args.k * args.pws))
+
+    return empirical_values, theoretical_values, analytical_theoretical_values
 
 
 def compute_distribution_average_path_length_varying_pws(args, tipology=None):
     empirical_values = []
 
-    for i in [1 - 1 / i for i in range(1, 21)]:
+    for i in [i / 1000 for i in range(1, 1000)]:
         if args.aplmean:
             temp = []
 
@@ -65,6 +69,8 @@ def compute_distribution_average_path_length_varying_pws(args, tipology=None):
 
         empirical_values.append(avg_path_length)
 
+        print('done iteration ' + str(i))
+
     return empirical_values
 
 
@@ -72,30 +78,34 @@ def main_average_path_length(args, tipology=None):
     '''
     Main function that calls subroutines and plot and save the results
     '''
-    empirical_values, theoretical_values = compute_distribution_average_path_length(
-        args, tipology)
+    # empirical_values, theoretical_values, analytical_theoretical_values = compute_distribution_average_path_length(
+    #     args, tipology)
 
-    h = args.k + 1
+    # h = args.k + 1
 
-    plt.figure()
-    plt.plot(list(range(h, args.n + 1)), empirical_values, label="empirical")
-    plt.plot(list(range(h, args.n + 1)),
-             theoretical_values,
-             label="theoretical")
-    plt.legend()
-    plt.title(
-        'Empirical average shortest path length against theoretical one -' +
-        tipology + ' m =' + str(args.mba))
+    # plt.figure()
+    # plt.plot(list(range(h, args.n + 1)), empirical_values, label="empirical")
+    # plt.plot(list(range(h, args.n + 1)),
+    #          theoretical_values,
+    #          label="theoretical")
+    # plt.legend()
+    # plt.title(
+    #     'Empirical average shortest path length against theoretical one -' +
+    #     tipology + ' m =' + str(args.mba))
 
-    if tipology == 'watts_strogatz':
-        plt.savefig(
-            path.join(
-                'results', str(args.n), tipology,
-                'pla_fixed_{}_{}_{}.png'.format(tipology, args.k, args.pws)))
+    # if tipology == 'watts_strogatz':
+    #     plt.plot(list(range(h, args.n + 1)),
+    #              analytical_theoretical_values,
+    #              label="analytical theoretical")
+    #     plt.savefig(
+    #         path.join(
+    #             'results', str(args.n), tipology,
+    #             'pla_fixed_{}_{}_{}.png'.format(tipology, args.k, args.pws)))
 
-    plt.savefig(
-        path.join('results', str(args.n), tipology,
-                  'pla_fixed_{}.png'.format(tipology)))
+    # else:
+    #     plt.savefig(
+    #         path.join('results', str(args.n), tipology,
+    #                   'pla_fixed_{}.png'.format(tipology)))
     # plt.show()
 
     # if required, shows the behaviour varying parameter pws instead of the number of nodes
@@ -104,22 +114,31 @@ def main_average_path_length(args, tipology=None):
             args, tipology)
 
         plt.figure()
-        plt.plot([1 - 1 / i for i in range(1, 21)],
+        plt.plot([i / 1000 for i in range(1, 1000)],
                  values_var,
                  label="empirical")
-        plt.plot([1 - 1 / i for i in range(1, 21)],
-                 [np.log(args.n) / np.log(args.k) for i in range(20)],
+        plt.plot([i / 1000 for i in range(1, 1000)],
+                 [np.log(args.n) / np.log(args.k) for i in range(1, 1000)],
                  label="theoretical beta->0")
-        plt.plot([1 - 1 / i for i in range(1, 21)],
-                 [args.n / (2 * args.k) for i in range(20)],
+        plt.plot([i / 1000 for i in range(1, 1000)],
+                 [args.n / (2 * args.k) for i in range(1, 1000)],
                  label="theoretical beta->1")
+        # plt.plot([i / 1000 for i in range(1, 1000)],
+        #          [(1000 / i) * np.log(args.n * (i / 1000))
+        #           for i in range(1, 1000)],
+        #          label="approximated theoretical")
+        plt.plot([i / 1000 for i in range(1, 1000)],
+                 [((2 * args.n) / args.k) *
+                  analytical_path_length(args.n * args.k * (i / 1000) * 0.5)
+                  for i in range(1, 1000)],
+                 label="analytical theoretical")
         plt.legend()
         plt.title(
             'Empirical average shortest path length against theoretical one -'
             + tipology + ' m =' + str(args.mba))
         plt.savefig(
             path.join('results', str(args.n), tipology,
-                      'pla_varyingbeta_{}.png'.format(tipology)))
+                      'pla_varyingbeta_{}_{}.png'.format(args.k, tipology)))
         # plt.show()
 
-    return empirical_values, theoretical_values
+    #return empirical_values, theoretical_values

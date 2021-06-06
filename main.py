@@ -18,10 +18,8 @@ def erdos_renyi_analysis(args):
     if not tipology in os.listdir(os.path.join('results', str(args.n))):
         os.mkdir(os.path.join('results', str(args.n), tipology))
 
-    test_1, test_2 = main_giant(args, tipology)
-    test_3, test_4 = main_node_distribution(args, tipology)
-
-    return test_1, test_2, test_3, test_4
+    main_giant(args, tipology)
+    main_node_distribution(args, tipology)
 
 
 def barabasi_albert_analysis(args):
@@ -33,10 +31,8 @@ def barabasi_albert_analysis(args):
     if not tipology in os.listdir(os.path.join('results', str(args.n))):
         os.mkdir(os.path.join('results', str(args.n), tipology))
 
-    test_1, test_2 = main_node_distribution(args, tipology)
-    test_3, test_4 = main_average_path_length(args, tipology)
-
-    return test_1, test_2, test_3, test_4
+    main_node_distribution(args, tipology)
+    main_average_path_length(args, tipology)
 
 
 def watts_strogatz_analysis(args):
@@ -48,12 +44,9 @@ def watts_strogatz_analysis(args):
     if not tipology in os.listdir(os.path.join('results', str(args.n))):
         os.mkdir(os.path.join('results', str(args.n), tipology))
 
-    test_1, test_2 = main_node_distribution(args, tipology)
-    test_3, test_4 = main_average_path_length(args, tipology)
-
-    return test_1, test_2, test_3, test_4
-
-    pass
+    main_node_distribution(args, tipology)
+    main_average_path_length(args, tipology)
+    main_average_path_length(args, tipology)
 
 
 analysis = {
@@ -80,11 +73,11 @@ def parsing():
                         default=1,
                         help='parameter probability')
 
-    parser.add_argument('--n', type=int, default=10, help='number of nodes')
+    parser.add_argument('--n', type=int, default=100, help='number of nodes')
 
     parser.add_argument('--k',
                         type=int,
-                        default=2,
+                        default=10,
                         help='number k nearest neighbors for WS')
 
     parser.add_argument('--t',
@@ -138,18 +131,19 @@ def parsing():
         type=int,
         default=1,
         help=
-        "number of edges to add to the new node at each iteration of the growth of the model")
+        "number of edges to add to the new node at each iteration of the growth of the model"
+    )
 
     parser.add_argument(
         '--aplmean',
         type=bool,
-        default=False,
+        default=True,
         help="compute mean of average path length at increasing values of n")
 
     parser.add_argument(
         '--aplmeansamples',
         type=int,
-        default=100,
+        default=1,
         help=
         "number of samples to compute mean of average path length at increasing values of n"
     )
@@ -157,7 +151,7 @@ def parsing():
     parser.add_argument(
         '--aplwsvaryingbeta',
         type=bool,
-        default=False,
+        default=True,
         help=
         "true if you want to study the length depending on the beta parameter (pws)"
     )
@@ -166,7 +160,8 @@ def parsing():
         '--ccmean',
         type=bool,
         default=False,
-        help="compute mean of clustering coefficient at increasing values of n")
+        help="compute mean of clustering coefficient at increasing values of n"
+    )
 
     parser.add_argument(
         '--cmeansamples',
@@ -188,11 +183,10 @@ if __name__ == "__main__":
     if not str(args.n) in os.listdir(os.path.join('results')):
         os.mkdir(os.path.join('results', str(args.n)))
 
-    main_clustering_coefficient(args, 'watts_strogatz')
-
-    # results = []
+    main_average_path_length(args, 'watts_strogatz')
+    
     # if args.all:
     #     for key, tipology in analysis.items():
-    #         results.append(tipology(args))
+    #         tipology(args)
     # else:
-    #     results.append(analysis[args.t](args))
+    #     analysis[args.t](args)

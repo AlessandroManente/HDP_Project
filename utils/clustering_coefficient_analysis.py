@@ -87,6 +87,6 @@ def main_clustering_coefficient(args, tipology):
         'Empirical clustering coefficient against theoretical one - Watts-Strogatz'
     )
     plt.xscale('log')
-    plt.savefig(path.join('results', 'cca_{}.png'.format(tipology)))
+    plt.savefig(path.join('results', 'cca', 'cca_{}.png'.format(tipology)))
 
     return empir, theor

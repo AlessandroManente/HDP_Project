@@ -188,3 +188,10 @@ def ba_model_B(n,t, save_steps=False):
         if save_steps:
             intermediate_graphs.append(G.copy())
     return G, intermediate_graphs
+
+
+def analytical_path_length(x):
+    a = np.sqrt(x**2 + 2 * x)
+    b = 1 / a
+    c = np.arctanh(x * b)
+    return b * 0.5 * c
