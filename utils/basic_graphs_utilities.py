@@ -54,6 +54,7 @@ def generate_graph(args, d=None, n=None, tipology=None, p=None, mba=None, k=None
             p = args.pws
 
         G = type_graph[tipology](n, k, p)
+        
     else:
         G = type_graph[tipology](n, mba)
 

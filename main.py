@@ -73,7 +73,7 @@ def parsing():
                         default=1,
                         help='parameter probability')
 
-    parser.add_argument('--n', type=int, default=100, help='number of nodes')
+    parser.add_argument('--n', type=int, default=50, help='number of nodes')
 
     parser.add_argument('--k',
                         type=int,
@@ -113,7 +113,7 @@ def parsing():
 
     parser.add_argument('--all',
                         type=bool,
-                        default=False,
+                        default=True,
                         help="execute analysis of all three types of graphs")
 
     parser.add_argument('--ndmd',
@@ -143,7 +143,7 @@ def parsing():
     parser.add_argument(
         '--aplmeansamples',
         type=int,
-        default=1,
+        default=20,
         help=
         "number of samples to compute mean of average path length at increasing values of n"
     )
@@ -159,14 +159,14 @@ def parsing():
     parser.add_argument(
         '--ccmean',
         type=bool,
-        default=False,
+        default=True,
         help="compute mean of clustering coefficient at increasing values of n"
     )
 
     parser.add_argument(
         '--cmeansamples',
         type=int,
-        default=100,
+        default=10,
         help=
         "number of samples to compute mean of clustering coefficient at increasing values of n"
     )
@@ -183,10 +183,10 @@ if __name__ == "__main__":
     if not str(args.n) in os.listdir(os.path.join('results')):
         os.mkdir(os.path.join('results', str(args.n)))
 
-    main_average_path_length(args, 'watts_strogatz')
+    # main_average_path_length(args, 'watts_strogatz')
     
-    # if args.all:
-    #     for key, tipology in analysis.items():
-    #         tipology(args)
-    # else:
-    #     analysis[args.t](args)
+    if args.all:
+        for key, tipology in analysis.items():
+            tipology(args)
+    else:
+        analysis[args.t](args)

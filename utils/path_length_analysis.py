@@ -70,7 +70,7 @@ def compute_distribution_average_path_length_varying_pws(args, tipology=None):
 
         empirical_values.append(avg_path_length)
 
-        print('done iteration ' + str(i))
+        # print('done iteration ' + str(i))
 
     return empirical_values
 
@@ -79,34 +79,36 @@ def main_average_path_length(args, tipology=None):
     '''
     Main function that calls subroutines and plot and save the results
     '''
-    # empirical_values, theoretical_values, analytical_theoretical_values = compute_distribution_average_path_length(
-    #     args, tipology)
+    empirical_values, theoretical_values, analytical_theoretical_values = compute_distribution_average_path_length(
+        args, tipology)
 
-    # h = args.k + 1
+    h = args.k + 1
 
-    # plt.figure()
-    # plt.plot(list(range(h, args.n + 1)), empirical_values, label="empirical")
-    # plt.plot(list(range(h, args.n + 1)),
-    #          theoretical_values,
-    #          label="theoretical")
-    # plt.legend()
-    # plt.title(
-    #     'Empirical average shortest path length against theoretical one -' +
-    #     tipology + ' m =' + str(args.mba))
+    plt.figure()
+    plt.plot(list(range(h, args.n + 1)), empirical_values, label="empirical")
+    plt.plot(list(range(h, args.n + 1)),
+             theoretical_values,
+             label="theoretical")
+    plt.legend()
+    plt.title(
+        'Average shortest path length -' +
+        tipology + ' m =' + str(args.mba))
+    plt.xlabel('Number of nodes')
+    plt.ylabel('Average Shortest Path Length')
 
-    # if tipology == 'watts_strogatz':
-    #     plt.plot(list(range(h, args.n + 1)),
-    #              analytical_theoretical_values,
-    #              label="analytical theoretical")
-    #     plt.savefig(
-    #         path.join(
-    #             'results', str(args.n), tipology,
-    #             'pla_fixed_{}_{}_{}.png'.format(tipology, args.k, args.pws)))
+    if tipology == 'watts_strogatz':
+        plt.plot(list(range(h, args.n + 1)),
+                 analytical_theoretical_values,
+                 label="analytical theoretical")
+        plt.savefig(
+            path.join(
+                'results', str(args.n), tipology,
+                'pla_fixed_{}_{}_{}.png'.format(tipology, args.k, args.pws)))
 
-    # else:
-    #     plt.savefig(
-    #         path.join('results', str(args.n), tipology,
-    #                   'pla_fixed_{}.png'.format(tipology)))
+    else:
+        plt.savefig(
+            path.join('results', str(args.n), tipology,
+                      'pla_fixed_{}.png'.format(tipology)))
     # plt.show()
 
     # if required, shows the behaviour varying parameter pws instead of the number of nodes
@@ -137,6 +139,8 @@ def main_average_path_length(args, tipology=None):
         plt.title(
             'Empirical average shortest path length against theoretical one -'
             + tipology + ' m =' + str(args.mba))
+        plt.xlabel('beta')
+        plt.ylabel('Average Shortest Path Length')
         plt.savefig(
             path.join('results', str(args.n), tipology,
                       'pla_varyingbeta_{}_{}.png'.format(args.k, tipology)))
