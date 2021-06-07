@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from utils.basic_graphs_utilities import *
 from os import path
+plt.style.use("ggplot")
 
 
 def find_components(graph):
@@ -78,6 +79,8 @@ def main_giant(args, tipology=None):
     plt.plot(np.arange(len(data_fixed_args['size_giant_component'])),
              data_fixed_args['size_giant_component'])
     plt.title('Size giant component in various trials - fixed parameters')
+    plt.xlabel('Number of trial')
+    plt.ylabel('Size of giant component')
     plt.savefig(path.join('results', str(args.n), tipology, 'gca_size_fixed_{}.png'.format(tipology)))
     # plt.show()
 
@@ -85,6 +88,8 @@ def main_giant(args, tipology=None):
     plt.plot(np.arange(len(data_fixed_args['number_of_connected_components'])),
              data_fixed_args['number_of_connected_components'])
     plt.title('Number of components in various trials - fixed parameters')
+    plt.xlabel('Number of trial')
+    plt.ylabel('Number of components')
     plt.savefig(
         path.join('results', str(args.n), tipology,
                   'gca_ncomp_fixed_{}.png'.format(tipology)))
@@ -94,6 +99,8 @@ def main_giant(args, tipology=None):
     plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
              data_varying_d['size_giant_component'])
     plt.title('Size giant component in various trials - varying d')
+    plt.xlabel('d')
+    plt.ylabel('Size of giant component')
     plt.savefig(
         path.join('results', str(args.n), tipology,
                   'gca_size_varying_{}.png'.format(tipology)))
@@ -103,6 +110,8 @@ def main_giant(args, tipology=None):
     plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
              data_varying_d['number_of_connected_components'])
     plt.title('Number of components in various trials - varying d')
+    plt.xlabel('d')
+    plt.ylabel('Number of components')
     plt.savefig(
         path.join('results', str(args.n), tipology,
                   'gca_ncomp_varying_{}.png'.format(tipology)))

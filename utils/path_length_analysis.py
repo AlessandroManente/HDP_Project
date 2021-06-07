@@ -2,6 +2,7 @@ import networkx as nx
 import numpy as np
 from utils.basic_graphs_utilities import *
 from os import path
+plt.style.use("ggplot")
 
 
 def compute_distribution_average_path_length(args, tipology=None):

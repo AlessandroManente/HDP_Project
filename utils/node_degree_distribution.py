@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from utils.basic_graphs_utilities import *
 from os import path
+plt.style.use("ggplot")
 
 
 def count_degrees(args, d=None, tipology=None):
@@ -57,16 +58,17 @@ def main_node_distribution(args, tipology):
     data_varying_d = count_degrees_varying_d(args, tipology)
 
     plt.figure()
-
     plt.hist(data_fixed_args, bins=10)
     plt.title('Distribution of degrees of nodes - fixed parameters')
+    plt.xlabel('k (degree)')
+    plt.ylabel('Counts')
     plt.savefig(
         path.join('results', str(args.n), tipology,
                   'ndd_allnodes_dist_fixed_{}.png'.format(tipology)))
     # plt.show()
 
     plt.figure()
-    plt.hist(data_fixed_args, bins=10)
+    plt.hist(data_varying_d, bins=10)
     plt.title('Distribution of degrees of nodes - varying parameters')
     plt.savefig(
         path.join('results', str(args.n), tipology,

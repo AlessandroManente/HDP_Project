@@ -3,6 +3,7 @@ import numpy as np
 from utils.basic_graphs_utilities import *
 from os import path
 import sys
+plt.style.use("ggplot")
 
 
 def compute_clustering_coefficient(args, tipology=None, n=None, k=None):
