@@ -73,7 +73,7 @@ def parsing():
                         default=1,
                         help='parameter probability')
 
-    parser.add_argument('--n', type=int, default=50, help='number of nodes')
+    parser.add_argument('--n', type=int, default=1000, help='number of nodes')
 
     parser.add_argument('--k',
                         type=int,
@@ -143,7 +143,7 @@ def parsing():
     parser.add_argument(
         '--aplmeansamples',
         type=int,
-        default=20,
+        default=1,
         help=
         "number of samples to compute mean of average path length at increasing values of n"
     )
@@ -183,10 +183,10 @@ if __name__ == "__main__":
     if not str(args.n) in os.listdir(os.path.join('results')):
         os.mkdir(os.path.join('results', str(args.n)))
 
-    # main_average_path_length(args, 'watts_strogatz')
-    
-    if args.all:
-        for key, tipology in analysis.items():
-            tipology(args)
-    else:
-        analysis[args.t](args)
+    main_average_path_length(args, 'watts_strogatz')
+
+    # if args.all:
+    #     for key, tipology in analysis.items():
+    #         tipology(args)
+    # else:
+    #     analysis[args.t](args)

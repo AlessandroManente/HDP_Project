@@ -45,7 +45,7 @@ def giant_component_varying_d(args, mean=False, tipology=None):
     data = []
 
     # d_list = list(range(0.01, args.n, (args.n - 0.01) / args.gmd))
-    d_list = list(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd))
+    d_list = [i / 100 for i in range(0, 201, 2)]
 
     if mean:
         for d in d_list:
@@ -78,7 +78,8 @@ def main_giant(args, tipology=None):
     plt.figure()
     plt.plot(np.arange(len(data_fixed_args['size_giant_component'])),
              data_fixed_args['size_giant_component'])
-    plt.title('Size giant component in various trials - fixed parameters')
+    plt.title('Size of giant component in various trials with d={}'.format(
+        args.d))
     plt.xlabel('Number of trial')
     plt.ylabel('Size of giant component')
     plt.savefig(path.join('results', str(args.n), tipology, 'gca_size_fixed_{}.png'.format(tipology)))
@@ -87,7 +88,8 @@ def main_giant(args, tipology=None):
     plt.figure()
     plt.plot(np.arange(len(data_fixed_args['number_of_connected_components'])),
              data_fixed_args['number_of_connected_components'])
-    plt.title('Number of components in various trials - fixed parameters')
+    plt.title('Number of components in various trials with d={}'.format(
+        args.d))
     plt.xlabel('Number of trial')
     plt.ylabel('Number of components')
     plt.savefig(
@@ -96,7 +98,7 @@ def main_giant(args, tipology=None):
     # plt.show()
 
     plt.figure()
-    plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
+    plt.plot([i / 100 for i in range(0, 201, 2)],
              data_varying_d['size_giant_component'])
     plt.title('Size giant component in various trials - varying d')
     plt.xlabel('d')
@@ -107,7 +109,7 @@ def main_giant(args, tipology=None):
     # plt.show()
 
     plt.figure()
-    plt.plot(np.arange(0.01, args.n, (args.n - 0.01) / args.gmd),
+    plt.plot([i / 100 for i in range(0, 201, 2)],
              data_varying_d['number_of_connected_components'])
     plt.title('Number of components in various trials - varying d')
     plt.xlabel('d')

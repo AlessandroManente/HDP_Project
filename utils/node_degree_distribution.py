@@ -41,7 +41,7 @@ def count_degrees_varying_d(args, tipology=None):
     '''
     data = []
 
-    d_list = list(np.arange(0.01, args.n, (args.n - 0.01) / args.ndmd))
+    d_list = [i / 100 for i in range(0, 201, 2)]
 
     for d in d_list:
         degrees = count_degrees_fixed_d(args, d, tipology)
@@ -59,7 +59,7 @@ def main_node_distribution(args, tipology):
 
     plt.figure()
     plt.hist(data_fixed_args, bins=10)
-    plt.title('Distribution of degrees of nodes - fixed parameters')
+    plt.title('Distribution of degrees of nodes with d={}'.format(args.d))
     plt.xlabel('k (degree)')
     plt.ylabel('Counts')
     plt.savefig(
@@ -67,6 +67,7 @@ def main_node_distribution(args, tipology):
                   'ndd_allnodes_dist_fixed_{}.png'.format(tipology)))
     # plt.show()
 
+    # USELESS as shit
     plt.figure()
     plt.hist(data_varying_d, bins=10)
     plt.title('Distribution of degrees of nodes - varying parameters')
