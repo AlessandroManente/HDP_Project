@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
+import progressbar
 
 # Switches for types of random graphs generation
 type_graph = {
@@ -24,9 +25,6 @@ def print_graph(graph):
                   nlist=[range(5, 10), range(5)],
                   with_labels=True,
                   font_weight='bold')
-
-    # plt.show()
-
 
 def generate_graph(args, d=None, n=None, tipology=None, p=None, mba=None, k=None):
     '''
@@ -175,16 +173,20 @@ def ba_model_B(n,t, save_steps=False):
         G.add_edge(i,i)
     intermediate_graphs=[]
 
-    for t in range(1,t):
+    degrees = [2]*len(G.nodes)
+    for t in progressbar.progressbar(range(1,t), redirect_stdout=True):
         ## Define the probability distribution with which we pick the nodes
         xk = list(G.nodes)
 
-        prepk = [G.degree[i] for i in G.nodes]
-        pk = prepk/np.sum(prepk)
+        # degrees = [G.degree[i] for i in G.nodes]
+        pk = degrees/np.sum(degrees)
 
         custom_dist = stats.rv_discrete(name="degree_distribution", values=(xk,pk))
-        extracted = custom_dist.rvs(size=1)[0]
-        G.add_edge(np.random.choice(nodes_list), extracted)
+        extracted_1 = custom_dist.rvs(size=1)[0]
+        extracted_0 = np.random.choice(nodes_list)
+        G.add_edge(extracted_0, extracted_1)
+        degrees[extracted_0] += 1
+        degrees[extracted_1] += 1
 
         if save_steps:
             intermediate_graphs.append(G.copy())
@@ -196,3 +198,36 @@ def analytical_path_length(x):
     b = 1 / a
     c = np.arctanh(x * b)
     return b * 0.5 * c
+
+if __name__ == "__main__":
+    plt.style.use("ggplot")
+    def draw_degree_distribution(graph, m, fig_title, file_title, theoretical_dist=False, loglog=True):
+        degrees = [val for (node, val) in graph.degree()]
+        degree_freq = nx.degree_histogram(graph)
+        degrees = np.array(range(len(degree_freq)))
+        plt.figure(figsize=(10, 8)) 
+        if loglog:
+            plt.loglog(degrees[m:], degree_freq[m:]/np.sum(degree_freq[m:]),'bo', mfc='none')
+        else:
+            plt.plot(degrees[m:], degree_freq[m:]/np.sum(degree_freq[m:]),'bo', mfc='none')
+            plt.yscale('log')
+        if theoretical_dist:
+            plt.plot(degrees[m:], theoretical_dist(degrees[m:],m), 'r-', label="Theorical Distribution")
+        plt.xlabel('k (degree)')
+        plt.ylabel('P(k)')
+        plt.title(fig_title)
+        plt.legend()
+        plt.savefig(f"results/50/barabasi_albert/{file_title}", dpi=300)
+        plt.show()
+
+    n = 50000
+    GB, _ = ba_model_B(n,n)
+
+    draw_degree_distribution(
+        GB,
+        1,
+        "Model B - Nodes' Degree Distribution",
+        f"degree_distribution_model_Bnt{n}",
+        loglog=True
+    )
+
