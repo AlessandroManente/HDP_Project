@@ -77,7 +77,7 @@ def parsing():
 
     parser.add_argument('--k',
                         type=int,
-                        default=10,
+                        default=100,
                         help='number k nearest neighbors for WS')
 
     parser.add_argument('--t',

@@ -139,8 +139,8 @@ def main_average_path_length(args, tipology=None):
                                                               (i / 1000) * 0.5)
              for i in range(1, 1000)],
             label="analytical theoretical")
-        # plt.xscale('log')
-        # plt.yscale('log')
+        plt.xscale('log')
+        plt.yscale('log')
         plt.legend()
         plt.title(
             'Empirical average shortest path length against theoretical one -'
