@@ -46,42 +46,62 @@ def main_clustering_coefficient(args, tipology):
     theor = []
     empir = []
     combinations = []
-    for n in [1000, 2000, 5000]:
-        for k in [50, 75, 100]:
+    for n in [5000]:
+        for k in [75, 100]:
             empirical_values, theoretical_values = compute_clustering_coefficient(
                 args, tipology, n, k)
 
-            theor.append(theoretical_values)
-            empir.append(empirical_values)
-            combinations.append([n, k])
+            plt.figure()
+            plt.plot([n / 1000 for n in range(1001)],
+                     empirical_values,
+                     label="empirical_" + str(n) + '_' + str(k))
+            plt.plot([n / 1000 for n in range(1001)],
+                     theoretical_values,
+                     label="theoretical_" + str(n) + '_' + str(k))
 
-    for i, el in enumerate(empir):
-        plt.figure()
-        plt.plot([i / 1000 for i in range(1001)],
-                 el,
-                 label="empirical_" + str(combinations[i][0]) + '_' +
-                 str(combinations[i][1]))
-        plt.plot([i / 1000 for i in range(1001)],
-                 theor[i],
-                 label="theoretical_" + str(combinations[i][0]) + '_' +
-                 str(combinations[i][1]))
-        
-        # plt.plot([i / 1000 for i in range(1001)],
-        #              empirical_values,
-        #              label="empirical")
-        # plt.plot([i / 1000 for i in range(1001)],
-        #             theoretical_values,
-        #             label="theoretical")
-        plt.legend()
-        plt.title(
-            'Clustering coefficient - Watts-Strogatz - n='
-            + str(n) + ' - k=' + str(k))
-        plt.xscale('log')
-        plt.xlabel('beta')
-        plt.ylabel('Clustering coefficient')
-        plt.savefig(
-            path.join('results', 'cca_{}_{}_{}.png'.format(n, k,
-                                                            tipology)))
+            # plt.plot([i / 1000 for i in range(1001)],
+            #              empirical_values,
+            #              label="empirical")
+            # plt.plot([i / 1000 for i in range(1001)],
+            #             theoretical_values,
+            #             label="theoretical")
+            plt.legend()
+            plt.title('Clustering coefficient - n=' + str(n) +
+                      ' - k=' + str(k))
+            plt.xscale('log')
+            plt.xlabel('beta')
+            plt.ylabel('Clustering coefficient')
+            plt.savefig(
+                path.join('results', 'cca',
+                          'cca_{}_{}_{}.png'.format(n, k, tipology)))
+
+    # for i, el in enumerate(empir):
+    #     plt.figure()
+    #     plt.plot([i / 1000 for i in range(1001)],
+    #              el,
+    #              label="empirical_" + str(combinations[i][0]) + '_' +
+    #              str(combinations[i][1]))
+    #     plt.plot([i / 1000 for i in range(1001)],
+    #              theor[i],
+    #              label="theoretical_" + str(combinations[i][0]) + '_' +
+    #              str(combinations[i][1]))
+
+    #     # plt.plot([i / 1000 for i in range(1001)],
+    #     #              empirical_values,
+    #     #              label="empirical")
+    #     # plt.plot([i / 1000 for i in range(1001)],
+    #     #             theoretical_values,
+    #     #             label="theoretical")
+    #     plt.legend()
+    #     plt.title(
+    #         'Clustering coefficient - Watts-Strogatz - n='
+    #         + str(n) + ' - k=' + str(k))
+    #     plt.xscale('log')
+    #     plt.xlabel('beta')
+    #     plt.ylabel('Clustering coefficient')
+    #     plt.savefig(
+    #         path.join('results', 'cca', 'cca_{}_{}_{}.png'.format(n, k,
+    #                                                         tipology)))
 
     # plt.legend()
     # plt.title(

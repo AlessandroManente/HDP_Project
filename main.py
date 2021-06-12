@@ -166,7 +166,7 @@ def parsing():
     parser.add_argument(
         '--cmeansamples',
         type=int,
-        default=10,
+        default=1,
         help=
         "number of samples to compute mean of clustering coefficient at increasing values of n"
     )
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     if not str(args.n) in os.listdir(os.path.join('results')):
         os.mkdir(os.path.join('results', str(args.n)))
 
-    main_average_path_length(args, 'watts_strogatz')
+    main_clustering_coefficient(args, 'watts_strogatz')
 
     # if args.all:
     #     for key, tipology in analysis.items():
