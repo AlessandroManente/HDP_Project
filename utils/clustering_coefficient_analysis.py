@@ -46,8 +46,8 @@ def main_clustering_coefficient(args, tipology):
     theor = []
     empir = []
     combinations = []
-    for n in [5000]:
-        for k in [75, 100]:
+    for n in [1000, 2000, 5000]:
+        for k in [100]:
             empirical_values, theoretical_values = compute_clustering_coefficient(
                 args, tipology, n, k)
 
@@ -66,14 +66,14 @@ def main_clustering_coefficient(args, tipology):
             #             theoretical_values,
             #             label="theoretical")
             plt.legend()
-            plt.title('Clustering coefficient - n=' + str(n) +
-                      ' - k=' + str(k))
+            plt.title('Clustering coefficient - N=' + str(n) +
+                      ' - K=' + str(k))
             plt.xscale('log')
             plt.xlabel('beta')
             plt.ylabel('Clustering coefficient')
             plt.savefig(
                 path.join('results', 'cca',
-                          'cca_{}_{}_{}.png'.format(n, k, tipology)))
+                          'cca_{}_{}_{}.png'.format(n, k, tipology)), dpi=600)
 
     # for i, el in enumerate(empir):
     #     plt.figure()
